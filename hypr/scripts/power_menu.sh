@@ -4,7 +4,7 @@
 options="Lock\nLogout\nHibernate\nReboot\nPoweroff\nSuspend"
 
 # Show the menu using Rofi
-choice=$(echo "$options" | rofi -dmenu -i -p "⏻ " -lines 5 -width 20)
+choice=$(echo -e "$options" | rofi -dmenu -i -p "⏻ " -lines 5 -width 20)
 
 case "$choice" in
 Lock)
