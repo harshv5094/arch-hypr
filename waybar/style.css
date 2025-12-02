@@ -1,0 +1,106 @@
+/* ================================
+   🪟 Waybar Window (Gruvbox)
+=================================== */
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-weight: 700;
+  font-size: 15px;
+}
+
+window#waybar {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 1);
+  transition: background-color 0.4s ease-out;
+}
+
+
+/* ================================
+   ✨ Animations
+=================================== */
+@keyframes blink {
+  to {
+    color: #FFFFFF;
+  }
+}
+
+/* ================================
+   🧩 Workspaces
+=================================== */
+#workspaces button {
+  padding: 0 3px;
+  background: transparent;
+  color: #FFFFFF;
+  border: none;
+  transition: color 0.4s ease-in-out;
+}
+
+#workspaces button.active {
+  color: #fabd2f;
+}
+
+#workspaces button.urgent {
+  color: #fb4934;
+  animation: blink 0.5s steps(12) infinite alternate;
+}
+
+#workspaces button.empty {
+  opacity: 0.6;
+}
+
+/* ================================
+   🧱 Module Padding & Spacing
+=================================== */
+#pulseaudio,
+#battery,
+#network,
+#cpu,
+#custom-expand-icon {
+  padding: 0px 10px;
+}
+
+#window,
+#submap,
+#workspaces {
+  padding: 0px 4px;
+}
+
+/* ================================
+   🔋 Battery
+=================================== */
+#battery {
+  transition: color 0.3s ease-in-out;
+}
+
+#battery.charging,
+#battery.plugged {
+  color: #b8bb26;
+}
+
+#battery.critical:not(.charging) {
+  color: #fb4934;
+  animation: blink 0.5s steps(12) infinite alternate;
+}
+
+/* ================================
+   🔊 Audio
+=================================== */
+#pulseaudio {
+  transition: color 0.4s ease-in-out;
+}
+
+#pulseaudio.muted {
+  color: #fb4934;
+}
+
+/* ================================
+   🧰 System Tray
+=================================== */
+#tray>.passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray>.needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: #fb4934;
+}

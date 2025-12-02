@@ -1,0 +1,32 @@
+font=mono 12
+anchor=top-right
+
+background-color=#000000CC
+text-color=#FFFFFF
+border-size=2
+border-radius=12
+
+width=320
+margin=4
+padding=4
+max-visible=5
+
+default-timeout=5000
+
+# --- Urgency levels ---
+
+[urgency=low]
+# gray border for low priority
+border-color=#888888
+default-timeout=3000
+
+[urgency=normal]
+# white border for normal notifications
+border-color=#FFFFFF
+default-timeout=5000
+
+[urgency=critical]
+# red border for critical notifications
+border-color=#FF0000
+# persistent until dismissed
+default-timeout=0

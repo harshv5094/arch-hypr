@@ -1,0 +1,158 @@
+{
+  // General Settings
+  "reload_style_on_change": true,
+  "position": "top",
+  "layer": "top",
+  // "height": 26,
+  // "spacing": 0,
+  // Module Layout
+  "modules-left": [
+    "hyprland/workspaces",
+    "hyprland/submap"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "hyprland/window",
+    "group/tray-expander",
+    "network",
+    "battery",
+    "cpu",
+    "pulseaudio"
+  ],
+  // 🧩 Modules Configuration
+  "custom/expand-icon": {
+    "format": "",
+    "tooltip": false
+  },
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "default": "",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "active": "\uf192"
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": []
+    }
+  },
+  // Hyprland Submaps
+  "hyprland/submap": {
+    "format": "\uf11c ",
+    "tooltip": false,
+    "on-click": "hyprctl dispatch submap reset"
+  },
+  "hyprland/window": {
+    "format": "{class}",
+    "tooltip-format": "{title}",
+    "max-length": 20,
+    "icon": true
+  },
+  "clock": {
+    "tooltip": false,
+    "format": "{:%a %I:%M %p}",
+    "format-alt": "{:%a %d %b W%V %Y}"
+  },
+  // Tray Expander Group
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": [
+      "custom/expand-icon",
+      "tray"
+    ]
+  },
+  "tray": {
+    "icon-size": 20,
+    "spacing": 8
+  },
+  "network": {
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "on-click": "killall nmtui || kitty --title nm-tui -e nmtui"
+  },
+  // Battery
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon}",
+    "format-full": "{icon}",
+    "format-discharging": "{icon}",
+    "format-charging": "{icon}",
+    "format-plugged": "{icon}",
+    "interval": 2,
+    "tooltip": true,
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "format-icons": {
+      "charging": [
+        "\uf244", // empty
+        "\uf243", // quarter
+        "\uf242", // half
+        "\uf241", // three-quarters
+        "\uf240" // full
+      ],
+      "default": [
+        "\uf244",
+        "\uf243",
+        "\uf242",
+        "\uf241",
+        "\uf240"
+      ]
+    }
+  },
+  // Audio (PulseAudio)
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "\uf6a9", // volume-mute
+    "tooltip-format": "Playing at {volume}%",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "pavucontrol",
+    "on-click-right": "pamixer -t",
+    "tooltip": true
+  },
+  // CPU
+  "cpu": {
+    "interval": 5,
+    "format": "\uf2db",
+    "on-click": "xdg-terminal-exec btop"
+  }
+}

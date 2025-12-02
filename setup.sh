@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+# Checking if script runner is root #
+if [ "$(id -u)" -eq 0 ]; then
+  echo "Please don't run this script as root"
+  exit 1
+fi
+
+# Global Variables #
+CLONE_URL="https://github.com/harshv5094/arch-hypr/"
+CLONE_DIR="/tmp/arch-hypr"
+XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config/}
+HYPR_DIRS=('hypr' 'mako' 'mpd' 'nwg-look' 'qt6ct' 'rmpc' 'rofi' 'waybar' 'xdg-desktop-portal')
+
+# Clonning my repository, also adding safety check #
+if [ ! -d ${CLONE_DIR} ]; then
+  git clone ${CLONE_URL} ${CLONE_DIR}
+
+  echo "Copying my config directories"
+  for HYPR_DIR in "${HYPR_DIRS[@]}"; do
+    cp -rf "${CLONE_DIR}/${HYPR_DIR}" "${XDG_CONFIG_HOME}"
+  done
+else
+  echo -e "${CLONE_DIR} exist!"
+
+  echo "Copying my config directories"
+  for HYPR_DIR in "${HYPR_DIRS[@]}"; do
+    cp -rf "${CLONE_DIR}/${HYPR_DIR}" "${XDG_CONFIG_HOME}"
+  done
+fi
+
+echo -e "\n Copying my folders first"
+
+setupLyWindowManager() {
+  echo -e "** Setting Up Login Manager (Ly) **\n"
+  paru -S --noconfirm ly
+
+  LOGIN_MANAGERS="sddm gdm lightdm lxdm lxdm-gtk3 mdm nodm xdm entrance"
+
+  for login_manager in $LOGIN_MANAGERS; do
+    if systemctl list-unit-files | grep -q "^${login_manager}\.service"; then
+      if sudo systemctl --is-active --quiet "$login_manager"; then
+        printf "%b\n" "* Disabling $login_manager... *"
+        sudo systemctl disable "$login_manager"
+        sudo systemctl stop "$login_manager"
+      fi
+    fi
+  done
+
+  echo -e "* Enabling Ly... *\n"
+  sudo systemctl enable ly.service
+
+  echo "* Copying My Ly config files *"
+  if [ -e /etc/ly ]; then
+    sudo mv /etc/ly/config.ini /etc/ly/config.ini.bak
+    sudo cp -rf "${CLONE_DIR}/ly/config.ini" "/etc/ly/"
+  fi
+
+  echo -e "* Ly setup complete! *\n"
+}
+
+setupHyprland() {
+  echo -e "** Installing Hyprland Packages **\n"
+  paru -S --noconfirm kitty hyprland hyprlock hypridle hyprpicker hyprpaper uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+
+  echo -e "** Installing Base tools **\n"
+  paru -S --noconfirm pavucontrol brightnessctl playerctl network-manager-applet gnome-keyring cpufreqctl \
+    wl-clipboard copyq mako blueman bluez bluez-utils waybar mate-polkit mpd mpc rmpc nwg-look \
+    xdg-utils xdg-user-dirs xdg-user-dirs-gtk gnome-themes-extra breeze qt6ct qt6-wayland speech-dispatcher cronie
+
+  echo -e "** Installing GUI tools **\n"
+  paru -S --noconfirm firefox gnome-disk-utility gnome-tweaks gnome-text-editor gnome-clocks gnome-characters \
+    transmission-gtk seahorse loupe timeshift evince transmission-gtk baobab \
+    gnome-calculator totem gimp
+
+  echo -e "** Installing File Manager **\n"
+  paru -S --noconfirm thunar tumbler libgepub libopenraw thunar-volman thunar-media-tags-plugin thunar-archive-plugin xarchiver
+
+  echo -e "** Installing Fonts & Icons **\n"
+  paru -S --noconfirm noto-fonts noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd inter-font ttf-firacode-nerd \
+    ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-mono ttf-hanazono noto-fonts-cjk papirus-icon-theme otf-font-awesome
+
+  echo -e "** Installing Hyprland Plugins **\n"
+  paru -S --noconfirm grimblast-git
+
+  echo -e "** Install AUR Packages Tools **\n"
+  paru -S --noconfirm visual-studio-code-bin localsend-bin linutil-bin auto-cpufreq xdg-terminal-exec
+
+  echo "** Setting up XDG Default Directories **"
+  xdg-user-dirs-update
+
+  echo "** Setting up XDG GTK Default Directories **"
+  xdg-user-dirs-gtk-update
+}
+
+if command -v paru &>/dev/null; then
+  setupLyWindowManager
+  echo -e "*** Starting Hyprland Setup **\n"
+  setupHyprland
+else
+  echo "** Please install hyprland first **"
+  exit 1
+fi
