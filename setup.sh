@@ -39,7 +39,7 @@ else
 fi
 
 setupLyWindowManager() {
-  echo -e "** Setting Up Login Manager (Ly) **\n"
+  echo -e "** Setting Up Login Manager (Ly) **"
   paru -S --noconfirm ly
 
   LOGIN_MANAGERS="sddm gdm lightdm lxdm lxdm-gtk3 mdm nodm xdm entrance"
@@ -54,7 +54,7 @@ setupLyWindowManager() {
     fi
   done
 
-  echo -e "* Enabling Ly... *\n"
+  echo -e "* Enabling Ly... *"
   sudo systemctl enable ly.service
 
   echo "* Copying My Ly config files *"
@@ -63,34 +63,34 @@ setupLyWindowManager() {
     sudo cp -rf "${CLONE_DIR}/ly/config.ini" "/etc/ly/"
   fi
 
-  echo -e "* Ly setup complete! *\n"
+  echo -e "* Ly setup complete! *"
 }
 
 setupHyprland() {
-  echo -e "** Installing Hyprland Packages **\n"
+  echo -e "** Installing Hyprland Packages **"
   paru -S --noconfirm kitty hyprland hyprlock hypridle hyprpicker hyprpaper uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 
-  echo -e "** Installing Base tools **\n"
+  echo -e "** Installing Base tools **"
   paru -S --noconfirm pavucontrol brightnessctl playerctl network-manager-applet gnome-keyring cpufreqctl \
     wl-clipboard copyq mako blueman bluez bluez-utils waybar mate-polkit mpd mpc rmpc nwg-look \
     xdg-utils xdg-user-dirs xdg-user-dirs-gtk gnome-themes-extra breeze qt6ct qt6-wayland speech-dispatcher cronie
 
-  echo -e "** Installing GUI tools **\n"
+  echo -e "** Installing GUI tools **"
   paru -S --noconfirm firefox gnome-disk-utility gnome-tweaks gnome-text-editor gnome-clocks gnome-characters \
     transmission-gtk seahorse loupe timeshift evince transmission-gtk baobab \
     gnome-calculator totem gimp
 
-  echo -e "** Installing File Manager **\n"
+  echo -e "** Installing File Manager **"
   paru -S --noconfirm thunar tumbler libgepub libopenraw thunar-volman thunar-media-tags-plugin thunar-archive-plugin xarchiver
 
-  echo -e "** Installing Fonts & Icons **\n"
+  echo -e "** Installing Fonts & Icons **"
   paru -S --noconfirm noto-fonts noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd inter-font ttf-firacode-nerd \
     ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-mono ttf-hanazono noto-fonts-cjk papirus-icon-theme otf-font-awesome
 
-  echo -e "** Installing Hyprland Plugins **\n"
+  echo -e "** Installing Hyprland Plugins **"
   paru -S --noconfirm grimblast-git
 
-  echo -e "** Install AUR Packages Tools **\n"
+  echo -e "** Install AUR Packages Tools **"
   paru -S --noconfirm visual-studio-code-bin localsend-bin linutil-bin auto-cpufreq xdg-terminal-exec
 
   echo "** Setting up XDG Default Directories **"
@@ -102,7 +102,7 @@ setupHyprland() {
 
 if command -v paru &>/dev/null; then
   setupLyWindowManager
-  echo -e "*** Starting Hyprland Setup **\n"
+  echo -e "*** Starting Hyprland Setup **"
   setupHyprland
 else
   echo "** Please install Paru first **"
