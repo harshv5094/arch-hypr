@@ -18,7 +18,16 @@ if [ ! -d ${CLONE_DIR} ]; then
 
   echo "Copying my config directories"
   for HYPR_DIR in "${HYPR_DIRS[@]}"; do
-    cp -rf "${CLONE_DIR}/${HYPR_DIR}" "${XDG_CONFIG_HOME}"
+    if [ -d "${XDG_CONFIG_HOME}/${HYPR_DIR}" ]; then
+      echo -e "${XDG_CONFIG_HOME}/${HYPR_DIR} exist!\nBacking Up ${XDG_CONFIG_HOME}/${HYPR_DIR}"
+      mv "${XDG_CONFIG_HOME}/${HYPR_DIR}" "${XDG_CONFIG_HOME}/${HYPR_DIR}.bak"
+
+      echo -e "Copying ${HYPR_DIR} to ${XDG_CONFIG_HOME}"
+      cp -rf "${CLONE_DIR}/${HYPR_DIR}" "${XDG_CONFIG_HOME}"
+    else
+      echo -e "Copying ${HYPR_DIR} to ${XDG_CONFIG_HOME}"
+      cp -rf "${CLONE_DIR}/${HYPR_DIR}" "${XDG_CONFIG_HOME}"
+    fi
   done
 else
   echo -e "${CLONE_DIR} exist!"
@@ -28,8 +37,6 @@ else
     cp -rf "${CLONE_DIR}/${HYPR_DIR}" "${XDG_CONFIG_HOME}"
   done
 fi
-
-echo -e "\n Copying my folders first"
 
 setupLyWindowManager() {
   echo -e "** Setting Up Login Manager (Ly) **\n"
@@ -98,6 +105,6 @@ if command -v paru &>/dev/null; then
   echo -e "*** Starting Hyprland Setup **\n"
   setupHyprland
 else
-  echo "** Please install hyprland first **"
+  echo "** Please install Paru first **"
   exit 1
 fi
