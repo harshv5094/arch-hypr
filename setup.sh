@@ -7,7 +7,7 @@ if [ "$(id -u)" -eq 0 ]; then
 fi
 
 # Global Variables #
-CLONE_URL="https://github.com/harshv5094/arch-hypr/"
+CLONE_URL="https://github.com/harshv5094/arch-hypr"
 CLONE_DIR="/tmp/arch-hypr"
 XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config/}
 HYPR_DIRS=('hypr' 'mako' 'mpd' 'nwg-look' 'qt6ct' 'rmpc' 'rofi' 'waybar' 'xdg-desktop-portal')
@@ -18,23 +18,23 @@ if [ ! -d ${CLONE_DIR} ]; then
 
   echo "Copying my config directories"
   for HYPR_DIR in "${HYPR_DIRS[@]}"; do
-    if [ -d "${XDG_CONFIG_HOME}/${HYPR_DIR}" ]; then
-      echo -e "${XDG_CONFIG_HOME}/${HYPR_DIR} exist!\nBacking Up ${XDG_CONFIG_HOME}/${HYPR_DIR}"
-      mv "${XDG_CONFIG_HOME}/${HYPR_DIR}" "${XDG_CONFIG_HOME}/${HYPR_DIR}.bak"
+    if [ -d "$XDG_CONFIG_HOME/$HYPR_DIR" ]; then
+      echo -e "$XDG_CONFIG_HOME/$HYPR_DIR exist!\nBacking Up $XDG_CONFIG_HOME/$HYPR_DIR"
+      mv "$XDG_CONFIG_HOME/$HYPR_DIR" "$XDG_CONFIG_HOME/${HYPR_DIR}.bak"
 
-      echo -e "Copying ${HYPR_DIR} to ${XDG_CONFIG_HOME}"
-      cp -rf "${CLONE_DIR}/${HYPR_DIR}" "${XDG_CONFIG_HOME}"
+      echo -e "Copying $HYPR_DIR to $XDG_CONFIG_HOME"
+      cp -rf "$CLONE_DIR/$HYPR_DIR" "$XDG_CONFIG_HOME"
     else
-      echo -e "Copying ${HYPR_DIR} to ${XDG_CONFIG_HOME}"
-      cp -rf "${CLONE_DIR}/${HYPR_DIR}" "${XDG_CONFIG_HOME}"
+      echo -e "Copying $HYPR_DIR to $XDG_CONFIG_HOME"
+      cp -rf "$CLONE_DIR/$HYPR_DIR" "$XDG_CONFIG_HOME"
     fi
   done
 else
-  echo -e "${CLONE_DIR} exist!"
+  echo -e "$CLONE_DIR exist!"
 
   echo "Copying my config directories"
   for HYPR_DIR in "${HYPR_DIRS[@]}"; do
-    cp -rf "${CLONE_DIR}/${HYPR_DIR}" "${XDG_CONFIG_HOME}"
+    cp -rf "$CLONE_DIR/$HYPR_DIR" "$XDG_CONFIG_HOME"
   done
 fi
 
@@ -42,14 +42,14 @@ setupLyWindowManager() {
   echo -e "** Setting Up Login Manager (Ly) **"
   paru -S --noconfirm ly
 
-  LOGIN_MANAGERS="sddm gdm lightdm lxdm lxdm-gtk3 mdm nodm xdm entrance"
+  LOGIN_MANAGERS=('sddm' 'gdm' 'lightdm' 'lxdm' 'lxdm-gtk3' 'mdm' 'nodm' 'xdm' 'entrance')
 
-  for login_manager in $LOGIN_MANAGERS; do
-    if systemctl list-unit-files | grep -q "^${login_manager}\.service"; then
-      if sudo systemctl --is-active --quiet "$login_manager"; then
-        printf "%b\n" "* Disabling $login_manager... *"
-        sudo systemctl disable "$login_manager"
-        sudo systemctl stop "$login_manager"
+  for LOGIN_MANAGER in "${LOGIN_MANAGERS[@]}"; do
+    if systemctl list-unit-files | grep -q "^${LOGIN_MANAGER}\.service"; then
+      if sudo systemctl --is-active --quiet "$LOGIN_MANAGER"; then
+        printf "%b\n" "* Disabling $LOGIN_MANAGER... *"
+        sudo systemctl disable "$LOGIN_MANAGER"
+        sudo systemctl stop "$LOGIN_MANAGER"
       fi
     fi
   done
@@ -67,6 +67,8 @@ setupLyWindowManager() {
 }
 
 setupHyprland() {
+  echo -e "*** Starting Hyprland Setup **"
+
   echo -e "** Installing Hyprland Packages **"
   paru -S --noconfirm kitty hyprland hyprlock hypridle hyprpicker hyprpaper uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 
@@ -98,11 +100,13 @@ setupHyprland() {
 
   echo "** Setting up XDG GTK Default Directories **"
   xdg-user-dirs-gtk-update
+
+  echo "*** Hyprland Setup is finished **"
+  rm -rf "$CLONE_DIR"
 }
 
 if command -v paru &>/dev/null; then
   setupLyWindowManager
-  echo -e "*** Starting Hyprland Setup **"
   setupHyprland
 else
   echo "** Please install Paru first **"
