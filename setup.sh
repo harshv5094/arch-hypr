@@ -49,7 +49,6 @@ setupLyWindowManager() {
       if sudo systemctl --is-active --quiet "$LOGIN_MANAGER"; then
         printf "%b\n" "* Disabling $LOGIN_MANAGER... *"
         sudo systemctl disable "$LOGIN_MANAGER"
-        sudo systemctl stop "$LOGIN_MANAGER"
       fi
     fi
   done
