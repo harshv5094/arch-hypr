@@ -78,7 +78,7 @@ setupHyprland() {
     xdg-utils xdg-user-dirs xdg-user-dirs-gtk gnome-themes-extra breeze qt6ct qt6-wayland speech-dispatcher cronie
 
   echo -e "** Installing GUI tools **"
-  paru -S --noconfirm firefox gnome-disk-utility gnome-tweaks gnome-text-editor gnome-clocks gnome-characters \
+  paru -S --noconfirm firefox gnome-disk-utility gnome-tweaks gnome-clocks gnome-characters \
     transmission-gtk seahorse loupe timeshift evince transmission-gtk baobab \
     gnome-calculator totem gimp
 
