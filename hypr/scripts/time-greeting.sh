@@ -16,10 +16,8 @@ if [ "$hour" -lt 12 ]; then
   greeting="Good Morning"
 elif [ "$hour" -lt 17 ]; then
   greeting="Good Afternoon"
-elif [ "$hour" -lt 21 ]; then
-  greeting="Good Evening"
 else
-  greeting="Good Night"
+  greeting="Good Evening"
 fi
 
 echo "$greeting"
