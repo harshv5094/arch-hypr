@@ -4,12 +4,15 @@
 if [ "$(id -u)" -eq 0 ]; then
   echo "Please don't run this script as root"
   exit 1
+elif command -v paru &>/dev/null; then
+  echo "Please install Paru to run this script"
+  exit 1
 fi
 
 # Global Variables #
 CLONE_URL="https://github.com/harshv5094/arch-hypr"
 CLONE_DIR="/tmp/arch-hypr"
-XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config/}
+XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 HYPR_DIRS=('hypr' 'mako' 'mpd' 'nwg-look' 'qt6ct' 'rmpc' 'rofi' 'waybar' 'xdg-desktop-portal')
 
 # Clonning my repository, also adding safety check #
@@ -69,30 +72,30 @@ setupHyprland() {
   echo -e "*** Starting Hyprland Setup **"
 
   echo -e "** Installing Hyprland Packages **"
-  paru -S --noconfirm kitty hyprland hyprlock hypridle hyprpicker hyprpaper uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+  paru -S --noconfirm --needed kitty hyprland hyprlock hypridle hyprpicker hyprpaper uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 
   echo -e "** Installing Base tools **"
-  paru -S --noconfirm pavucontrol brightnessctl playerctl network-manager-applet gnome-keyring cpufreqctl \
+  paru -S --noconfirm --needed pavucontrol brightnessctl playerctl network-manager-applet gnome-keyring cpufreqctl \
     wl-clipboard copyq mako blueman bluez bluez-utils waybar mate-polkit mpd mpc rmpc nwg-look \
     xdg-utils xdg-user-dirs xdg-user-dirs-gtk gnome-themes-extra breeze qt6ct qt6-wayland speech-dispatcher cronie
 
   echo -e "** Installing GUI tools **"
-  paru -S --noconfirm firefox gnome-disk-utility gnome-tweaks gnome-characters \
+  paru -S --noconfirm --needed firefox gnome-disk-utility gnome-tweaks gnome-characters \
     transmission-gtk seahorse loupe timeshift evince transmission-gtk baobab \
     gnome-calculator totem gimp
 
   echo -e "** Installing File Manager **"
-  paru -S --noconfirm thunar tumbler libgepub libopenraw thunar-volman thunar-media-tags-plugin thunar-archive-plugin xarchiver
+  paru -S --noconfirm --needed thunar tumbler libgepub libopenraw thunar-volman thunar-media-tags-plugin thunar-archive-plugin xarchiver
 
   echo -e "** Installing Fonts & Icons **"
-  paru -S --noconfirm noto-fonts noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd inter-font ttf-firacode-nerd \
+  paru -S --noconfirm --needed noto-fonts noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd inter-font ttf-firacode-nerd \
     ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-mono ttf-hanazono noto-fonts-cjk papirus-icon-theme otf-font-awesome
 
   echo -e "** Installing Hyprland Plugins **"
-  paru -S --noconfirm grimblast-git
+  paru -S --noconfirm --needed grimblast-git
 
   echo -e "** Install AUR Packages Tools **"
-  paru -S --noconfirm visual-studio-code-bin localsend-bin linutil-bin auto-cpufreq xdg-terminal-exec
+  paru -S --noconfirm --needed visual-studio-code-bin localsend-bin linutil-bin auto-cpufreq xdg-terminal-exec
 
   echo "** Setting up XDG Default Directories **"
   xdg-user-dirs-update
