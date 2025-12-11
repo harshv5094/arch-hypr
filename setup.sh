@@ -57,7 +57,8 @@ setupLyWindowManager() {
   done
 
   echo -e "* Enabling Ly... *"
-  sudo systemctl enable ly.service
+  sudo systemctl disable getty@tty2.service
+  sudo systemctl enable ly@tty2.service
 
   echo "* Copying My Ly config files *"
   if [ -e /etc/ly ]; then
