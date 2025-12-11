@@ -35,12 +35,22 @@ if [ ! -d ${CLONE_DIR} ]; then
 else
   echo -e "$CLONE_DIR exist!"
 
-  echo "Copying my config directories"
+  echo "** Copying my config directories **"
   for HYPR_DIR in "${HYPR_DIRS[@]}"; do
     cp -rf "$CLONE_DIR/$HYPR_DIR" "$XDG_CONFIG_HOME"
   done
 fi
 
+# -- Copying my pacman.conf -- #
+echo "** Copying my pacman configuration **"
+if [ ! -f "/etc/pacman.conf" ]; then
+  cp -rf "$CLONE_DIR/pacman.conf" "/etc/"
+else
+  mv "/etc/pacman.conf" "/etc/pacman.conf.bak"
+  cp -rf "$CLONE_DIR/pacman.conf" "/etc/"
+fi
+
+# -- Setup my window manager -- #
 setupLyWindowManager() {
   echo -e "** Setting Up Login Manager (Ly) **"
   paru -S --noconfirm ly
@@ -57,11 +67,12 @@ setupLyWindowManager() {
   done
 
   echo -e "* Enabling Ly... *"
+  # NOTE: https://codeberg.org/fairyglade/ly/releases/tag/v1.3.0
   sudo systemctl disable getty@tty2.service
   sudo systemctl enable ly@tty2.service
 
   echo "* Copying My Ly config files *"
-  if [ -e /etc/ly ]; then
+  if [ -d "/etc/ly/" ]; then
     sudo mv /etc/ly/config.ini /etc/ly/config.ini.bak
     sudo cp -rf "${CLONE_DIR}/ly/config.ini" "/etc/ly/"
   fi
