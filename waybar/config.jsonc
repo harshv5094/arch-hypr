@@ -30,7 +30,7 @@
     "on-click": "activate",
     "format": "{icon}",
     "format-icons": {
-      "default": "\u2b24",
+      "default": "\u25ef",
       "active": "\uf192"
     },
     "persistent-workspaces": {
