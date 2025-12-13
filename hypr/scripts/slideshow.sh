@@ -30,8 +30,13 @@ background {
 " >~/.config/hypr/conf/lock-background.conf
 
   hyprpaper &
-  sleep 2m
+  sleep 1m
   main
 }
 
-main
+if [ ! -d "$HOME/Pictures/wallpapers/" ]; then
+  notify-send -u cirtical "$HOME/Pictures/wallpapers/ does not exist. Please create this directory and store your wallpapers there."
+  exit 1
+else
+  main
+fi

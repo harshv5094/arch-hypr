@@ -1,23 +1,27 @@
 #!/usr/bin/env bash
 
-hyprctl hyprpaper unload all
-killall hyprpaper
+if [ ! -d "$HOME/Pictures/wallpapers/" ]; then
+  notify-send -u cirtical "$HOME/Pictures/wallpapers/ does not exist. Please create this directory and store your wallpapers there."
+  exit 1
+else
+  hyprctl hyprpaper unload all
+  killall hyprpaper
 
-echo "splash = false" >~/.config/hypr/hyprpaper.conf
-echo "ipc = true" >>~/.config/hypr/hyprpaper.conf
-# monitors=$(hyprctl monitors -j | jq -r ".[] | .name")
+  echo "splash = false" >~/.config/hypr/hyprpaper.conf
+  echo "ipc = true" >>~/.config/hypr/hyprpaper.conf
+  # monitors=$(hyprctl monitors -j | jq -r ".[] | .name")
 
-# for monitor in $monitors; do
-#   wallpaper=$(fd ".png|.jpg|.jpeg|.webp" ~/Pictures/wallpapers/ | shuf -n1)
-#   echo "preload = $wallpaper" >>~/.config/hypr/hyprpaper.conf
-#   echo "wallpaper = $monitor,$wallpaper" >>~/.config/hypr/hyprpaper.conf
-# done
+  # for monitor in $monitors; do
+  #   wallpaper=$(fd ".png|.jpg|.jpeg|.webp" ~/Pictures/wallpapers/ | shuf -n1)
+  #   echo "preload = $wallpaper" >>~/.config/hypr/hyprpaper.conf
+  #   echo "wallpaper = $monitor,$wallpaper" >>~/.config/hypr/hyprpaper.conf
+  # done
 
-wallpaper=$(fd ".png|.jpg|.jpeg|.webp" ~/Pictures/wallpapers/ | shuf -n1)
-echo "preload = $wallpaper" >>~/.config/hypr/hyprpaper.conf
-echo "wallpaper = ,$wallpaper" >>~/.config/hypr/hyprpaper.conf
+  wallpaper=$(fd ".png|.jpg|.jpeg|.webp" ~/Pictures/wallpapers/ | shuf -n1)
+  echo "preload = $wallpaper" >>~/.config/hypr/hyprpaper.conf
+  echo "wallpaper = ,$wallpaper" >>~/.config/hypr/hyprpaper.conf
 
-echo "# BACKGROUND
+  echo "# BACKGROUND
 background {
     blur_passes = 3
     contrast = 1
@@ -28,4 +32,5 @@ background {
   }
 " >~/.config/hypr/conf/lock-background.conf
 
-hyprctl dispatch exec hyprpaper
+  hyprctl dispatch exec hyprpaper
+fi
