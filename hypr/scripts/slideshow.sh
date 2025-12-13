@@ -20,7 +20,6 @@ main() {
 
   echo "# BACKGROUND
 background {
-    monitor =
     blur_passes = 3
     contrast = 1
     brightness = 0.5
@@ -31,7 +30,7 @@ background {
 " >~/.config/hypr/conf/lock-background.conf
 
   hyprpaper &
-  sleep 5m
+  sleep 2m
   main
 }
 
