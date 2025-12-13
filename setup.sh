@@ -41,14 +41,31 @@ else
   done
 fi
 
-# -- Copying my pacman.conf -- #
-echo "** Copying my pacman configuration **"
-if [ ! -f "/etc/pacman.conf" ]; then
-  cp -rf "$CLONE_DIR/pacman.conf" "/etc/"
-else
-  mv "/etc/pacman.conf" "/etc/pacman.conf.bak"
-  cp -rf "$CLONE_DIR/pacman.conf" "/etc/"
-fi
+# -- Setup Chaotic AUR -- #
+setupChaoticAur() {
+  echo "** Getting Chaotic AUR Primary Keys **"
+  sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+  sudo pacman-key --lsign-key 3056513887B78AEB
+
+  echo "** Installing Chaotic AUR mirrorlist **"
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+
+  # -- Copying my pacman.conf -- #
+  echo "** Copying my custom pacman.conf setting **"
+  if [ ! -f "/etc/pacman.conf" ]; then
+    cp -rf "$CLONE_DIR/pacman.conf" "/etc/"
+  else
+    mv "/etc/pacman.conf" "/etc/pacman.conf.bak"
+    cp -rf "$CLONE_DIR/pacman.conf" "/etc/"
+  fi
+
+  echo "** Refreshing mirrorlist **"
+  sudo pacman -Syu
+
+  echo "** Installing Paru from Chaotic AUR **"
+  sudo pacman -S chaotic-aur/paru
+}
 
 # -- Setup my window manager -- #
 setupLyWindowManager() {
@@ -120,6 +137,7 @@ setupHyprland() {
 }
 
 if command -v paru &>/dev/null; then
+  setupChaoticAur
   setupLyWindowManager
   setupHyprland
 else
