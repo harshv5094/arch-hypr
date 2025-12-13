@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Try to get info from playerctl
-song_info=$(playerctl metadata --format '{{title}} / {{artist}}' 2>/dev/null)
+song_info=$(playerctl metadata --format '{{title}} / {{artist}}')
 
 # If playerctl returned nothing, try MPD via mpc
 if [ -z "$song_info" ]; then
