@@ -101,20 +101,18 @@ setupHyprland() {
   echo -e "*** Starting Hyprland Setup **"
 
   echo -e "** Installing Hyprland Packages **"
-  paru -S --noconfirm --needed kitty hyprland hyprlock hypridle hyprpicker hyprpaper uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+  paru -S --noconfirm --needed kitty hyprland hyprlock hypridle hyprpicker hyprpaper \
+    uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk xdg-desktop-portal-gnome xdg-desktop-portal-kde
 
   echo -e "** Installing Base tools **"
   paru -S --noconfirm --needed pavucontrol brightnessctl playerctl network-manager-applet gnome-keyring cpufreqctl \
     wl-clipboard copyq mako blueman bluez bluez-utils waybar mate-polkit mpd mpc rmpc nwg-look \
-    xdg-utils xdg-user-dirs xdg-user-dirs-gtk gnome-themes-extra breeze qt6ct qt6-wayland speech-dispatcher cronie
+    libgepub libopenraw xdg-utils xdg-user-dirs xdg-user-dirs-gtk gnome-themes-extra breeze qt6ct qt6-wayland speech-dispatcher cronie
 
   echo -e "** Installing GUI tools **"
   paru -S --noconfirm --needed firefox chromium gnome-disk-utility gnome-tweaks gnome-characters \
     transmission-gtk seahorse loupe timeshift evince transmission-gtk baobab \
-    gnome-calculator totem gimp
-
-  echo -e "** Installing File Manager **"
-  paru -S --noconfirm --needed thunar tumbler libgepub libopenraw thunar-volman thunar-media-tags-plugin thunar-archive-plugin xarchiver
+    gnome-calculator totem gimp nautilus
 
   echo -e "** Installing Fonts & Icons **"
   paru -S --noconfirm --needed noto-fonts noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd inter-font ttf-firacode-nerd \
