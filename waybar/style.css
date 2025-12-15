@@ -1,5 +1,5 @@
 /* ================================
-   🪟 Waybar Window (Gruvbox Dark Hard)
+   🪟 Waybar Window
 =================================== */
 
 * {
@@ -9,9 +9,7 @@
 }
 
 window#waybar {
-  /* Gruvbox Dark Hard Background: #1d2021 (with transparency) */
-  background-color: rgba(29, 32, 33, 0.8);
-  /* Gruvbox Dark Hard Foreground: #f9f5d7 */
+  background-color: #282828;
   color: #f9f5d7;
   transition: background-color 0.4s ease-out;
 }
@@ -22,7 +20,6 @@ window#waybar {
 =================================== */
 @keyframes blink {
   to {
-    /* Gruvbox Dark Hard Foreground: #f9f5d7 */
     color: #f9f5d7;
   }
 }
@@ -33,19 +30,16 @@ window#waybar {
 #workspaces button {
   padding: 0 3px;
   background: transparent;
-  /* Gruvbox Dark Hard Foreground: #f9f5d7 */
   color: #f9f5d7;
   border: none;
   transition: color 0.4s ease-in-out;
 }
 
 #workspaces button.active {
-  /* Gruvbox Yellow */
   color: #fabd2f;
 }
 
 #workspaces button.urgent {
-  /* Gruvbox Red */
   color: #fb4934;
   animation: blink 0.5s steps(12) infinite alternate;
 }
@@ -85,7 +79,6 @@ window#waybar {
 }
 
 #battery.critical:not(.charging) {
-  /* Gruvbox Red */
   color: #fb4934;
   animation: blink 0.5s steps(12) infinite alternate;
 }
@@ -98,7 +91,6 @@ window#waybar {
 }
 
 #pulseaudio.muted {
-  /* Gruvbox Red */
   color: #fb4934;
 }
 
@@ -111,6 +103,5 @@ window#waybar {
 
 #tray>.needs-attention {
   -gtk-icon-effect: highlight;
-  /* Gruvbox Red */
   background-color: #fb4934;
 }

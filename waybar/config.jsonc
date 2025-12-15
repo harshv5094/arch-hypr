@@ -1,10 +1,8 @@
 {
   // General Settings
   "reload_style_on_change": true,
-  "position": "bottom",
+  "position": "top",
   "layer": "top",
-  // "height": 26,
-  // "spacing": 0,
   // Module Layout
   "modules-left": [
     "hyprland/workspaces",
@@ -18,8 +16,8 @@
     "group/tray-expander",
     "network",
     "battery",
+    "pulseaudio",
     "cpu",
-    "pulseaudio"
   ],
   // 🧩 Modules Configuration
   "custom/expand-icon": {
@@ -31,6 +29,15 @@
     "format": "{icon}",
     "format-icons": {
       "default": "\u25ef",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
       "active": "\uf192"
     },
     "persistent-workspaces": {
@@ -145,5 +152,5 @@
     "interval": 5,
     "format": "\uf2db",
     "on-click": "xdg-terminal-exec btop"
-  }
+  },
 }
