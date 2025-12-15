@@ -30,7 +30,7 @@ background {
     vibrancy_darkness = 0.2
     path = $wallpaper   # supports png, jpg, webp (no animations, though)
   }
-" >~/.config/hypr/conf/lock-background.conf
+" >~/.config/hypr/sections/lock-background.conf
 
   hyprctl dispatch exec hyprpaper
 fi
