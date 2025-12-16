@@ -16,8 +16,8 @@
     "group/tray-expander",
     "network",
     "battery",
-    "pulseaudio",
     "cpu",
+    "pulseaudio",
   ],
   // 🧩 Modules Configuration
   "custom/expand-icon": {
@@ -131,6 +131,12 @@
       ]
     }
   },
+  // CPU
+  "cpu": {
+    "interval": 5,
+    "format": "\uf2db",
+    "on-click": "xdg-terminal-exec btop"
+  },
   // Audio (PulseAudio)
   "pulseaudio": {
     "format": "{icon}",
@@ -146,11 +152,5 @@
     "on-click": "pavucontrol",
     "on-click-right": "pamixer -t",
     "tooltip": true
-  },
-  // CPU
-  "cpu": {
-    "interval": 5,
-    "format": "\uf2db",
-    "on-click": "xdg-terminal-exec btop"
   },
 }
