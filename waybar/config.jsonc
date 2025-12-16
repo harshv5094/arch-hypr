@@ -3,6 +3,7 @@
   "reload_style_on_change": true,
   "position": "top",
   "layer": "top",
+  "height": "26",
   // Module Layout
   "modules-left": [
     "hyprland/workspaces",
@@ -58,7 +59,7 @@
     "format": "{class}",
     "tooltip-format": "{title}",
     "max-length": 20,
-    "icon": true
+    "icon": false
   },
   "clock": {
     "tooltip": false,
