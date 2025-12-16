@@ -4,42 +4,36 @@
 if [ "$(id -u)" -eq 0 ]; then
   echo "Please don't run this script as root"
   exit 1
-elif command -v paru &>/dev/null; then
-  echo "Please install Paru to run this script"
-  exit 1
 fi
 
-# Global Variables #
-CLONE_URL="https://github.com/harshv5094/arch-hypr"
-CLONE_DIR="/tmp/arch-hypr"
-XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
-HYPR_DIRS=('hypr' 'mako' 'mpd' 'nwg-look' 'qt6ct' 'rmpc' 'rofi' 'waybar' 'xdg-desktop-portal')
+# -- Setup Config Folders -- #
+setupFolders() {
+  # Clonning my repository, also adding safety check #
+  if [ ! -d ${CLONE_DIR} ]; then
+    git clone ${CLONE_URL} ${CLONE_DIR}
 
-# Clonning my repository, also adding safety check #
-if [ ! -d ${CLONE_DIR} ]; then
-  git clone ${CLONE_URL} ${CLONE_DIR}
+    echo "Copying my config directories"
+    for HYPR_DIR in "${HYPR_DIRS[@]}"; do
+      if [ -d "$XDG_CONFIG_HOME/$HYPR_DIR" ]; then
+        echo -e "$XDG_CONFIG_HOME/$HYPR_DIR exist!\nBacking Up $XDG_CONFIG_HOME/$HYPR_DIR"
+        mv "$XDG_CONFIG_HOME/$HYPR_DIR" "$XDG_CONFIG_HOME/${HYPR_DIR}.bak"
 
-  echo "Copying my config directories"
-  for HYPR_DIR in "${HYPR_DIRS[@]}"; do
-    if [ -d "$XDG_CONFIG_HOME/$HYPR_DIR" ]; then
-      echo -e "$XDG_CONFIG_HOME/$HYPR_DIR exist!\nBacking Up $XDG_CONFIG_HOME/$HYPR_DIR"
-      mv "$XDG_CONFIG_HOME/$HYPR_DIR" "$XDG_CONFIG_HOME/${HYPR_DIR}.bak"
+        echo -e "Copying $HYPR_DIR to $XDG_CONFIG_HOME"
+        cp -rf "$CLONE_DIR/$HYPR_DIR" "$XDG_CONFIG_HOME"
+      else
+        echo -e "Copying $HYPR_DIR to $XDG_CONFIG_HOME"
+        cp -rf "$CLONE_DIR/$HYPR_DIR" "$XDG_CONFIG_HOME"
+      fi
+    done
+  else
+    echo -e "$CLONE_DIR exist!"
 
-      echo -e "Copying $HYPR_DIR to $XDG_CONFIG_HOME"
+    echo "** Copying my config directories **"
+    for HYPR_DIR in "${HYPR_DIRS[@]}"; do
       cp -rf "$CLONE_DIR/$HYPR_DIR" "$XDG_CONFIG_HOME"
-    else
-      echo -e "Copying $HYPR_DIR to $XDG_CONFIG_HOME"
-      cp -rf "$CLONE_DIR/$HYPR_DIR" "$XDG_CONFIG_HOME"
-    fi
-  done
-else
-  echo -e "$CLONE_DIR exist!"
-
-  echo "** Copying my config directories **"
-  for HYPR_DIR in "${HYPR_DIRS[@]}"; do
-    cp -rf "$CLONE_DIR/$HYPR_DIR" "$XDG_CONFIG_HOME"
-  done
-fi
+    done
+  fi
+}
 
 # -- Setup Chaotic AUR -- #
 setupChaoticAur() {
@@ -63,14 +57,14 @@ setupChaoticAur() {
   echo "** Refreshing mirrorlist **"
   sudo pacman -Syu
 
-  echo "** Installing Paru from Chaotic AUR **"
+  echo "** Installing yay from Chaotic AUR **"
   sudo pacman -S chaotic-aur/paru
 }
 
 # -- Setup my window manager -- #
 setupLyWindowManager() {
   echo -e "** Setting Up Login Manager (Ly) **"
-  paru -S --noconfirm ly
+  $AUR_HELPER -S --noconfirm ly
 
   LOGIN_MANAGERS=('sddm' 'gdm' 'lightdm' 'lxdm' 'lxdm-gtk3' 'mdm' 'nodm' 'xdm' 'entrance')
 
@@ -101,28 +95,28 @@ setupHyprland() {
   echo -e "*** Starting Hyprland Setup **"
 
   echo -e "** Installing Hyprland Packages **"
-  paru -S --noconfirm --needed kitty hyprland hyprlock hypridle hyprpicker hyprpaper \
+  $AUR_HELPER -S --noconfirm --needed kitty hyprland hyprlock hypridle hyprpicker hyprpaper \
     uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk xdg-desktop-portal-gnome xdg-desktop-portal-kde
 
   echo -e "** Installing Base tools **"
-  paru -S --noconfirm --needed pavucontrol brightnessctl playerctl network-manager-applet gnome-keyring cpufreqctl \
+  $AUR_HELPER -S --noconfirm --needed pavucontrol brightnessctl playerctl network-manager-applet gnome-keyring cpufreqctl \
     wl-clipboard copyq mako blueman bluez bluez-utils waybar mate-polkit mpd mpc rmpc nwg-look \
     libgepub libopenraw xdg-utils xdg-user-dirs xdg-user-dirs-gtk gnome-themes-extra breeze qt6ct qt6-wayland speech-dispatcher cronie
 
   echo -e "** Installing GUI tools **"
-  paru -S --noconfirm --needed firefox chromium gnome-disk-utility gnome-tweaks gnome-characters \
+  $AUR_HELPER -S --noconfirm --needed firefox chromium gnome-disk-utility gnome-tweaks gnome-characters \
     transmission-gtk seahorse loupe timeshift evince transmission-gtk baobab \
     gnome-calculator totem gimp nautilus
 
   echo -e "** Installing Fonts & Icons **"
-  paru -S --noconfirm --needed noto-fonts noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd inter-font ttf-firacode-nerd \
+  $AUR_HELPER -S --noconfirm --needed noto-fonts noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd inter-font ttf-firacode-nerd \
     ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-mono ttf-hanazono noto-fonts-cjk papirus-icon-theme otf-font-awesome
 
   echo -e "** Installing Hyprland Plugins **"
-  paru -S --noconfirm --needed grimblast-git
+  $AUR_HELPER -S --noconfirm --needed grimblast-git
 
   echo -e "** Install AUR Packages Tools **"
-  paru -S --noconfirm --needed visual-studio-code-bin localsend-bin linutil-bin auto-cpufreq xdg-terminal-exec
+  $AUR_HELPER -S --noconfirm --needed visual-studio-code-bin localsend-bin linutil-bin auto-cpufreq xdg-terminal-exec
 
   echo "** Setting up XDG Default Directories **"
   xdg-user-dirs-update
@@ -134,11 +128,21 @@ setupHyprland() {
   rm -rf "$CLONE_DIR"
 }
 
-if command -v paru &>/dev/null; then
+# Global Variables #
+CLONE_URL="https://github.com/harshv5094/arch-hypr"
+CLONE_DIR="/tmp/arch-hypr"
+XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+HYPR_DIRS=('hypr' 'mako' 'mpd' 'nwg-look' 'qt6ct' 'rmpc' 'rofi' 'waybar' 'xdg-desktop-portal')
+
+# Change this AUR_HELPER to your choice
+AUR_HELPER="paru"
+
+if command -v $AUR_HELPER &>/dev/null; then
+  setupFolders
   setupChaoticAur
   setupLyWindowManager
   setupHyprland
 else
-  echo "** Please install Paru first **"
+  echo "** Please install $AUR_HELPER first for this script to work. **"
   exit 1
 fi
