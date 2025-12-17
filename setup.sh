@@ -96,7 +96,7 @@ setupHyprland() {
 
   echo -e "** Installing Hyprland Packages **"
   $AUR_HELPER -S --noconfirm --needed kitty hyprland hyprlock hypridle hyprpicker hyprpaper \
-    uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk xdg-desktop-portal-gnome xdg-desktop-portal-kde
+    uwsm rofi xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 
   echo -e "** Installing Base tools **"
   $AUR_HELPER -S --noconfirm --needed pavucontrol brightnessctl playerctl network-manager-applet gnome-keyring cpufreqctl \
@@ -106,7 +106,7 @@ setupHyprland() {
   echo -e "** Installing GUI tools **"
   $AUR_HELPER -S --noconfirm --needed firefox chromium gnome-disk-utility gnome-tweaks gnome-characters \
     transmission-gtk seahorse loupe timeshift evince transmission-gtk baobab \
-    gnome-calculator totem gimp nautilus
+    gnome-calculator totem nautilus
 
   echo -e "** Installing Fonts & Icons **"
   $AUR_HELPER -S --noconfirm --needed noto-fonts noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd inter-font ttf-firacode-nerd \
