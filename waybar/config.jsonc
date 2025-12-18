@@ -1,10 +1,8 @@
 {
-  // General Settings
   "reload_style_on_change": true,
   "position": "top",
   "layer": "top",
   "height": "26",
-  // Module Layout
   "modules-left": [
     "hyprland/workspaces",
     "hyprland/submap"
@@ -20,7 +18,6 @@
     "cpu",
     "pulseaudio",
   ],
-  // 🧩 Modules Configuration
   "custom/expand-icon": {
     "format": "",
     "tooltip": false
@@ -49,7 +46,6 @@
       "5": []
     }
   },
-  // Hyprland Submaps
   "hyprland/submap": {
     "format": "\uf11c ",
     "tooltip": false,
@@ -59,14 +55,13 @@
     "format": "{class}",
     "tooltip-format": "{title}",
     "max-length": 20,
-    "icon": false
+    "icon": true
   },
   "clock": {
     "tooltip": false,
     "format": "{:%a %I:%M %p}",
     "format-alt": "{:%a %d %b W%V %Y}"
   },
-  // Tray Expander Group
   "group/tray-expander": {
     "orientation": "inherit",
     "drawer": {
@@ -100,7 +95,6 @@
     "interval": 3,
     "on-click": "killall nmtui || kitty --title nm-tui -e nmtui"
   },
-  // Battery
   "battery": {
     "states": {
       "warning": 30,
@@ -117,11 +111,11 @@
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
     "format-icons": {
       "charging": [
-        "\uf244", // empty
-        "\uf243", // quarter
-        "\uf242", // half
-        "\uf241", // three-quarters
-        "\uf240" // full
+        "\uf244",
+        "\uf243",
+        "\uf242",
+        "\uf241",
+        "\uf240"
       ],
       "default": [
         "\uf244",
@@ -132,16 +126,14 @@
       ]
     }
   },
-  // CPU
   "cpu": {
     "interval": 5,
     "format": "\uf2db",
     "on-click": "xdg-terminal-exec btop"
   },
-  // Audio (PulseAudio)
   "pulseaudio": {
     "format": "{icon}",
-    "format-muted": "\uf6a9", // volume-mute
+    "format-muted": "\uf6a9",
     "tooltip-format": "Playing at {volume}%",
     "format-icons": {
       "default": [
@@ -153,5 +145,5 @@
     "on-click": "pavucontrol",
     "on-click-right": "pamixer -t",
     "tooltip": true
-  },
+  }
 }
