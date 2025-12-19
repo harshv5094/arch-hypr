@@ -16,7 +16,7 @@
     "network",
     "battery",
     "cpu",
-    "pulseaudio",
+    "pulseaudio"
   ],
   "custom/expand-icon": {
     "format": "",
@@ -24,20 +24,6 @@
   },
   "hyprland/workspaces": {
     "on-click": "activate",
-    "format": "{icon}",
-    "format-icons": {
-      "default": "\u25ef",
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "active": "\uf192"
-    },
     "persistent-workspaces": {
       "1": [],
       "2": [],
