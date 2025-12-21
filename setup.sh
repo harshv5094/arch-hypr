@@ -104,7 +104,7 @@ setupHyprland() {
     libgepub libopenraw xdg-utils xdg-user-dirs xdg-user-dirs-gtk gnome-themes-extra breeze qt6ct qt6-wayland speech-dispatcher cronie
 
   echo -e "** Installing GUI tools **"
-  $AUR_HELPER -S --noconfirm --needed firefox chromium gnome-disk-utility gnome-tweaks gnome-characters \
+  $AUR_HELPER -S --noconfirm --needed firefox gnome-disk-utility gnome-tweaks gnome-characters \
     transmission-gtk seahorse loupe timeshift evince transmission-gtk baobab \
     gnome-calculator totem nautilus
 
@@ -116,7 +116,7 @@ setupHyprland() {
   $AUR_HELPER -S --noconfirm --needed grimblast-git
 
   echo -e "** Install AUR Packages Tools **"
-  $AUR_HELPER -S --noconfirm --needed visual-studio-code-bin localsend-bin linutil-bin auto-cpufreq xdg-terminal-exec
+  $AUR_HELPER -S --noconfirm --needed visual-studio-code-bin localsend-bin linutil-bin brave-bin auto-cpufreq xdg-terminal-exec
 
   echo "** Setting up XDG Default Directories **"
   xdg-user-dirs-update
